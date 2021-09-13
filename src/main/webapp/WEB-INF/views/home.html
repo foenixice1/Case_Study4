@@ -1,0 +1,103 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Student</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+
+    <h2>Show Student</h2>
+    <a href="/createPost" class="btn btn-success">Create Post</a>
+    <br>
+    <br>
+    <form action="/findByName" method="get">
+        <input type="text" class="form-control" placeholder="search" name="findName">
+        <input type="text" hidden name="action" value="findName">
+        <button type="submit" class="btn btn-success">Find</button>
+    </form>
+
+    <br>
+    <br>
+    <table class="table">
+        <thead>
+        <th colspan="7">
+            <h1 style="text-align: center">Manager Student</h1>
+        </th>
+        <tr>
+            <th>name</th>
+            <th>username</th>
+            <th>passwd</th>
+            <th>email</th>
+            <th>about</th>
+            <th>dateOfBirth</th>
+            <th>images</th>
+            <th>posts</th>
+            <th>role</th>
+            <th colspan="2">Actison</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="home : ${list}">
+            <!--      <td><a th:href="@{/view/{id}(id=${s.id})}"><span th:text="${s.name}"></span></a></td>-->
+            <td th:text="${home.name}"></td>
+            <td th:text="${home.username}"></td>
+            <td th:text="${home.passwd}"></td>
+            <td th:text="${home.email}"></td>
+            <td th:text="${home.about}"></td>
+            <td th:text="${home.dateOfBirth}"></td>
+            <td><img th:src="${home.img}" width="100px" height="100px"></td>
+            <td th:each="post:${home.posts}">
+                <span th:text="${post.getContenPost()}"></span>
+            </td>
+                  <td><a th:href="@{/edit/{id}(id=${home.id})}" class="btn btn-warning">Edit</a></td>
+                  <td><a th:href="@{/delete/{id}(id=${home.id})}" class="btn btn-danger">Delete</a></td>
+        </tr>
+        <tr>
+            <th>accounts</th>
+            <th>contenPost</th>
+            <th>date</th>
+            <th>love</th>
+            <th>img</th>
+            <th>comments</th>
+        </tr>
+        <tr th:each="post: ${listPost}">
+            <td th:text="${post.accounts.name}"></td>
+            <td th:text="${post.contenPost}"></td>
+            <td th:text="${post.date}"></td>
+            <td th:text="${post.love}"></td>
+           <td> <img th:src="${post.img}" width="100px" height="100px"></td>
+            <td th:each="comment:${post.comments}">
+                <span th:text="${comment.accounts.name}"></span>
+                <span th:text="${comment.getContentComment()}"></span>
+            </td>
+            <td><a th:href="@{/edit/{id}(id=${post.id})}" class="btn btn-warning">Edit</a></td>
+            <td><a th:href="@{/delete/{id}(id=${post.id})}" class="btn btn-danger">Delete</a></td>
+        </tr>
+
+        <tr>
+            <th>accounts</th>
+            <th>contentComment</th>
+            <th>post</th>
+        </tr>
+        <tr th:each="cmt: ${listCmt}">
+            <td th:text="${cmt.accounts.name}">
+            </td>
+            <td th:text="${cmt.contentComment}"></td>
+            <td th:text="${cmt.post.contenPost}"></td>
+            <td><a th:href="@{/editCmt/{id}(id=${cmt.id})}" class="btn btn-warning">Edit</a></td>
+            <td><a th:href="@{/deleteCmt/{id}(id=${cmt.id})}" class="btn btn-danger">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/createCmt" class="btn btn-success">Create Cmt</a>
+</div>
+</body>
+</html>
+

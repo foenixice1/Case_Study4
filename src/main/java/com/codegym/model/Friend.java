@@ -7,27 +7,53 @@ import java.util.List;
 public class Friend {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     private String name;
-
-    @OneToMany
-    private List<Images> images;
-
+    private int idFriend;
+    private String img;
+    @ManyToOne
+    private Accounts accounts;
     public Friend() {
     }
 
-    public Friend(Integer id, String name, List<Images> images) {
+    public Friend(int id, String name, int idFriend, String img, Accounts accounts) {
         this.id = id;
         this.name = name;
-        this.images = images;
+        this.idFriend = idFriend;
+        this.img = img;
+        this.accounts = accounts;
     }
 
-    public Integer getId() {
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public int getIdFriend() {
+        return idFriend;
+    }
+
+    public void setIdFriend(int idFriend) {
+        this.idFriend = idFriend;
+    }
+
+    public Accounts getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(Accounts accounts) {
+        this.accounts = accounts;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -39,11 +65,4 @@ public class Friend {
         this.name = name;
     }
 
-    public List<Images> getImages() {
-        return images;
-    }
-
-    public void setImages(List<Images> images) {
-        this.images = images;
-    }
 }

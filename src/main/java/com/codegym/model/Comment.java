@@ -1,31 +1,39 @@
 package com.codegym.model;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 
 @Entity
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     private String contentComment;
 
     @ManyToOne
-    private User user;
+    private Accounts accounts;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @NotFound(action = NotFoundAction.IGNORE)
+    private Post post;
 
     public Comment() {
     }
 
-    public Comment(Integer id, String contentComment, User user) {
+    public Comment(int id, String contentComment, Accounts accounts, Post post) {
         this.id = id;
         this.contentComment = contentComment;
-        this.user = user;
+        this.accounts = accounts;
+        this.post = post;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -37,11 +45,19 @@ public class Comment {
         this.contentComment = contentComment;
     }
 
-    public User getUser() {
-        return user;
+    public Accounts getAccounts() {
+        return accounts;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAccounts(Accounts accounts) {
+        this.accounts = accounts;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 }

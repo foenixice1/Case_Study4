@@ -35,7 +35,7 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
-@EnableJpaRepositories("com.codegym")
+@EnableJpaRepositories("com.codegym.repository")
 @ComponentScan("com.codegym")
 @EnableSpringDataWebSupport
 public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
@@ -52,7 +52,7 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
-        templateResolver.setPrefix("/WEB-INF/views");
+        templateResolver.setPrefix("/WEB-INF/views/");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCharacterEncoding("UTF-8");
@@ -97,7 +97,7 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/casestudy4");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/case_study");
         dataSource.setUsername("root");
         dataSource.setPassword("123123");
         return dataSource;
@@ -121,19 +121,10 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
     @Override
     // chỉ cho Spring biết chỗ lấy tài liệu tĩnh.(js,css,img)
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/i/**/")
-                .addResourceLocations("file:D:\\Module4\\Case_Study4\\src\\main\\webapp\\images/");
-//        registry.addResourceHandler("/music/**/")
-//                .addResourceLocations("file:D:\\MD4-JPA\\casestudy4-mxhmusic\\src\\main\\webapp\\music/");
-//        registry.addResourceHandler("/css/**/")
-//                .addResourceLocations("file:D:\\MD4-JPA\\casestudy4-mxhmusic\\src\\main\\webapp\\css/");
-//        registry.addResourceHandler("/js/**/")
-//                .addResourceLocations("file:D:\\MD4-JPA\\casestudy4-mxhmusic\\src\\main\\webapp\\js/");
-//        registry.addResourceHandler("/fonts/**/")
-//                .addResourceLocations("file:D:\\MD4-JPA\\casestudy4-mxhmusic\\src\\main\\webapp\\fonts/");
-
-
+        registry.addResourceHandler("/**")
+                .addResourceLocations("file:D:\\Module4\\Case_Study4\\src\\main\\webapp\\WEB-INF\\views\\");
     }
+
 
     @Bean
     public CommonsMultipartResolver multipartResolver() {
@@ -141,26 +132,5 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
         multipartResolver.setMaxUploadSizePerFile(10000000);
         return multipartResolver;
     }
-
-
-
-//    @Bean
-//    public IBlogMusicService iBlogMusicService(){
-//        return new BlogMusicService();
-//    }
-//
-//    @Bean
-//    public ITheLoaiService iTheLoaiService(){
-//        return new TheLoaiService();
-//    }
-//
-//    @Bean
-//    public IPersonService iPersonService(){
-//        return new PersonService();
-//    }
-//    @Bean
-//    public IRoleService iRoleService(){
-//        return new RoleService();
-//    }
 
 }
